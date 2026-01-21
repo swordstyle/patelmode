@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avi Bustdown</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .patel-mode {
+            position: absolute;
+            font-family: Arial, sans-serif;
+            font-size: clamp(3rem, 12vw, 8rem);
+            font-weight: bold;
+            color: white;
+            text-shadow:
+                0 0 20px #ff0000,
+                0 0 30px #ff8800,
+                0 0 40px #ffff00,
+                0 0 50px #00ff00,
+                0 0 60px #0088ff,
+                0 0 70px #8800ff,
+                0 0 80px #ff00ff;
+            animation: rainbowFlash 0.3s infinite alternate, textPulse 0.15s infinite, bounce 4s ease-in-out infinite;
+            z-index: 20;
+            pointer-events: none;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .flash-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 15;
+            mix-blend-mode: difference;
+            animation: raveFlashInterval 6s infinite;
+        }
+
+        @keyframes rainbowFlash {
+            0% {
+                opacity: 1;
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                opacity: 0.7;
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        @keyframes textPulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+
+        @keyframes bounce {
+            0% {
+                top: 10%;
+                left: 10%;
+            }
+            25% {
+                top: 10%;
+                left: calc(90% - 100vw * 0.2);
+            }
+            50% {
+                top: calc(90% - 15rem);
+                left: calc(90% - 100vw * 0.2);
+            }
+            75% {
+                top: calc(90% - 15rem);
+                left: 10%;
+            }
+            100% {
+                top: 10%;
+                left: 10%;
+            }
+        }
+
+        @keyframes raveFlashInterval {
+            0% { background-color: rgba(255, 255, 255, 0); }
+            0.1% { background-color: rgba(255, 0, 0, 0.8); }
+            2% { background-color: rgba(0, 255, 0, 0.8); }
+            4% { background-color: rgba(0, 0, 255, 0.8); }
+            6% { background-color: rgba(255, 255, 0, 0.8); }
+            8% { background-color: rgba(255, 0, 255, 0.8); }
+            10% { background-color: rgba(0, 255, 255, 0.8); }
+            15% { background-color: rgba(255, 255, 255, 0.9); }
+            20% { background-color: rgba(128, 0, 255, 0.8); }
+            25% { background-color: rgba(255, 128, 0, 0.8); }
+            30% { background-color: rgba(0, 255, 128, 0.8); }
+            35% { background-color: rgba(255, 0, 128, 0.8); }
+            40% { background-color: rgba(128, 255, 0, 0.8); }
+            45% { background-color: rgba(0, 128, 255, 0.8); }
+            50% { background-color: rgba(255, 255, 255, 0); }
+            100% { background-color: rgba(255, 255, 255, 0); }
+        }
+
+        .patel-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(145deg, #f0f0f0, #d0d0d0);
+            color: #333;
+            border: 2px solid #ccc;
+            padding: 20px 40px;
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: bold;
+            border-radius: 15px;
+            cursor: pointer;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8), -1px -1px 2px rgba(0,0,0,0.3);
+            box-shadow:
+                8px 8px 16px rgba(0,0,0,0.3),
+                -8px -8px 16px rgba(255,255,255,0.9),
+                inset 2px 2px 4px rgba(255,255,255,0.6),
+                inset -2px -2px 4px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 100;
+            animation: buttonPulse 2s infinite;
+        }
+
+        .patel-button:hover {
+            transform: translate(-50%, -50%) scale(1.05);
+            box-shadow:
+                6px 6px 12px rgba(0,0,0,0.4),
+                -6px -6px 12px rgba(255,255,255,0.9),
+                inset 1px 1px 2px rgba(255,255,255,0.7),
+                inset -1px -1px 2px rgba(0,0,0,0.3);
+        }
+
+        .patel-button:active {
+            transform: translate(-50%, -50%) scale(0.98);
+            box-shadow:
+                inset 4px 4px 8px rgba(0,0,0,0.3),
+                inset -4px -4px 8px rgba(255,255,255,0.6);
+        }
+
+        @keyframes buttonPulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .countdown-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            transition: opacity 1s ease-out;
+        }
+
+        .countdown-number {
+            color: white;
+            font-size: 10rem;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            text-shadow: 0 0 50px #ffffff;
+            animation: countdownPulse 1s ease-in-out;
+        }
+
+        @keyframes countdownPulse {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <audio id="bgMusic" loop class="hidden">
+        <source src="bg-music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <div id="flashOverlay" class="flash-overlay hidden"></div>
+    <div id="patelText" class="patel-mode hidden">PATEL MODE</div>
+    <img id="bustdownImg" src="avi-bustdown.jpeg" alt="Avi Bustdown" class="hidden">
+
+    <img id="friendlyImg" src="avi.jpeg" alt="Friendly Avi">
+    <button id="patelButton" class="patel-button" onclick="activatePatelMode()">TURN ON PATEL MODE</button>
+
+    <div id="countdownOverlay" class="countdown-overlay hidden">
+        <div id="countdownNumber" class="countdown-number">4</div>
+    </div>
+
+    <script>
+        function activatePatelMode() {
+            // Hide friendly elements
+            document.getElementById('friendlyImg').classList.add('hidden');
+            document.getElementById('patelButton').classList.add('hidden');
+
+            // Start music immediately
+            const music = document.getElementById('bgMusic');
+            music.classList.remove('hidden');
+            music.play().catch(e => console.log('Audio play failed:', e));
+
+            // Show countdown
+            const countdownOverlay = document.getElementById('countdownOverlay');
+            const countdownNumber = document.getElementById('countdownNumber');
+            countdownOverlay.classList.remove('hidden');
+
+            let count = 4;
+            const countdownInterval = setInterval(() => {
+                countdownNumber.textContent = count;
+                countdownNumber.style.animation = 'none';
+                setTimeout(() => {
+                    countdownNumber.style.animation = 'countdownPulse 1s ease-in-out';
+                }, 10);
+
+                count--;
+
+                if (count < 0) {
+                    clearInterval(countdownInterval);
+
+                    // Fade out countdown and show PATEL MODE
+                    countdownOverlay.style.opacity = '0';
+
+                    setTimeout(() => {
+                        countdownOverlay.classList.add('hidden');
+
+                        // Show PATEL MODE elements
+                        document.getElementById('flashOverlay').classList.remove('hidden');
+                        document.getElementById('patelText').classList.remove('hidden');
+                        document.getElementById('bustdownImg').classList.remove('hidden');
+                    }, 1000);
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
